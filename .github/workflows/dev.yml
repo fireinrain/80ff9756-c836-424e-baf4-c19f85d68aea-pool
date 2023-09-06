@@ -1,0 +1,34 @@
+name: Every Repo Pushed Job
+
+permissions:
+  contents: write
+
+
+on:
+  push:
+    branches:
+      - master # Replace with your branch name
+
+jobs:
+  daily_build:
+    name: run for latest changes
+    runs-on: ubuntu-latest
+    env:
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      REDIS_PASS: ${{ secrets.REDIS_PASS }}
+
+
+    steps:
+      # Step 1: run a standard checkout action
+      - name: Checkout target repo
+        uses: actions/checkout@v3
+
+      - name: Set Up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.20.4
+
+      - name: Run Interval check ip alive task
+        run: |
+          ./bbt-pool -c true
