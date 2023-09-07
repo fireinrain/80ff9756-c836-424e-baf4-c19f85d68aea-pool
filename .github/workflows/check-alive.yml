@@ -47,5 +47,6 @@ jobs:
           git config --local user.email "lzyme.dev@gmail.com"
           git config --local user.name "ActionBot"
           git add $(ls | grep Country.mmdb*)
+          git add .
           git commit -m "Update Country.mmdb"
           git push
