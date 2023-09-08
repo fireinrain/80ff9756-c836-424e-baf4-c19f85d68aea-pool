@@ -1,0 +1,55 @@
+name: Every 3 Day Job
+
+permissions:
+  contents: write
+
+#每天凌晨六点
+on:
+  schedule:
+    - cron: "0 0 */3 * *" # every 3 days
+
+#on:
+#  push:
+#    branches:
+#      - master # Replace with your branch name
+
+jobs:
+  daily_build:
+    name: crontab run for check ip alive
+    runs-on: ubuntu-latest
+    env:
+      REDIS_HOST: ${{ secrets.REDIS_HOST }}
+      REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      REDIS_PASS: ${{ secrets.REDIS_PASS }}
+
+    steps:
+      # Step 1: run a standard checkout action
+      - name: Checkout target repo
+        uses: actions/checkout@v3
+
+      - name: Set Up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.20.4
+
+      - name: Run Interval sync cloudflare-better-ip task
+        run: |
+          go mod tidy
+          go build -o cf-betterip-pool
+          ./cf-betterip-pool -f true
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          bash check_new_countrydb.sh
+        continue-on-error: true
+
+      - name: Commit and push changes
+        if: steps.check_changes.outcome != 'success'
+        run: |
+          git config --local user.email "lzyme.dev@gmail.com"
+          git config --local user.name "ActionBot"
+          git add $(ls | grep Country.mmdb*)
+          git add .
+          git commit -m "Update Country.mmdb"
+          git push
