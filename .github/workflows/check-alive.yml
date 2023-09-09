@@ -5,7 +5,7 @@ permissions:
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # every 15min
+    - cron: "*/20 * * * *" # every 20min
 
 #on:
 #  push:
