@@ -1,4 +1,4 @@
-name: Every 15Min Job
+name: Every 20Min Job
 
 permissions:
   contents: write
