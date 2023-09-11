@@ -34,8 +34,6 @@ jobs:
 
       - name: Run Interval sync cloudflare-better-ip task
         run: |
-          go mod tidy
-          go build -o cf-betterip-pool
           ./cf-betterip-pool -f true
 
       - name: Check for changes
