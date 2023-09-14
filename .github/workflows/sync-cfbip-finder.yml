@@ -34,7 +34,7 @@ jobs:
 
       - name: Run Interval sync cloudflare-better-ip task
         run: |
-          ./cf-betterip-pool -f true
+          ./bbt-pool -f true
 
       - name: Check for changes
         id: check_changes
