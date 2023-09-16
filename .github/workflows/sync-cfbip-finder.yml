@@ -3,10 +3,10 @@ name: Every 3 Day Job
 permissions:
   contents: write
 
-#每天凌晨六点
+#每7天凌晨2点
 on:
   schedule:
-    - cron: "0 0 */3 * *" # every 3 days
+    - cron: "0 2 */7 * *" # every 7 days
 
 #on:
 #  push:
