@@ -1,4 +1,4 @@
-name: Every 7 Day Job
+name: Every 8 Day Job
 
 permissions:
   contents: write
@@ -6,7 +6,7 @@ permissions:
 #每天凌晨六点
 on:
   schedule:
-    - cron: "0 17 */7 * *" # 每七天晚上五点运行
+    - cron: "0 17 */8 * *" # 每8天晚上五点运行
 
 #on:
 #  push:
